@@ -1,36 +1,53 @@
 package md.riden.interviewtask.stepDefinitions
 
 import com.google.gson.Gson
-import io.cucumber.java.en.When
+import io.cucumber.java.en.Given
+import io.cucumber.java.en.Then
+import md.riden.interviewtask.api.PhotosAPI
 import md.riden.interviewtask.common.logger
 import md.riden.interviewtask.context.ApiContext
-import md.riden.interviewtask.api.PhotosAPI
 import md.riden.interviewtask.models.Photo
 import org.junit.Assert
 
 class ApiStepDefinitions(private val apiContext: ApiContext) {
-    @When("user gets photos")
+    @Given("user gets photos")
     fun getPhotos() {
         apiContext.photosResponse = PhotosAPI.getPhotos()
         logger().info(apiContext.photosResponse.body.asString())
     }
 
-    @When("user 2")
-    fun partTwo() {
-        apiContext.photosResponse.then().assertThat().statusCode(200)
-        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
-        Assert.assertTrue("Photos API response contains 0 array elements", list.size > 0)
-        Assert.assertNotNull(
-            "There is no photo with \"non sit quo\" title",
-            list.firstOrNull { it.title == "non sit quo" })
+    @Then("^user asserts that response code is equal to ([0-9]{3})$")
+    fun responseCodeEqualTo(code: Int) {
+        apiContext.photosResponse.then().assertThat().statusCode(code)
     }
 
-    @When("user 3")
-    fun partThree() {
+    @Then("^user asserts that there are more than ([0-9]{1,6}) photos$")
+    fun assertThereArePhotos(num: Int) {
         val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
-        val listOfAlbumId100 = list.filterNot { it.albumId != 100 }
+        Assert.assertTrue("Photos API response contains 0 array elements", list.size > num)
+
+    }
+
+    @Then("^user asserts response body has a photo with \"(.*)\" title$")
+    fun checkIfResponseBodyHasPhotoWithTitle(title: String) {
+        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
+        Assert.assertNotNull(
+            "There is no photo with \"$title\" title",
+            list.firstOrNull { it.title == title })
+    }
+
+    @Then("^user removes all photos from the collection that have albumId different than ([0-9]{1,6})$")
+    fun removePhotosWithAlbumIdNotEqual(albumId: Int) {
+        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
+        val listOfAlbumId100 = list.filterNot { it.albumId != albumId }
         println(Gson().toJson(listOfAlbumId100))
-        val listOfErrorPhotos = list.filterNot { !it.title.contains("error") }
+
+    }
+
+    @Then("^user removes all photos that do not contain the word \"(.*)\" in the title$")
+    fun removePhotosWithNameThatDoesntContain(title: String) {
+        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
+        val listOfErrorPhotos = list.filterNot { !it.title.contains(title) }
         println(Gson().toJson(listOfErrorPhotos))
     }
 }
