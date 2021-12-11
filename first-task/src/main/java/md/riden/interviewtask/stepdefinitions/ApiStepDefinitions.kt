@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import io.cucumber.java.en.Given
 import io.cucumber.java.en.Then
 import md.riden.interviewtask.api.PhotosAPI
+import md.riden.interviewtask.common.AllureHelper
 import md.riden.interviewtask.common.logger
 import md.riden.interviewtask.context.ApiContext
 import md.riden.interviewtask.models.Photo
@@ -37,14 +38,16 @@ class ApiStepDefinitions(private val apiContext: ApiContext) {
 
     @Then("^user removes all photos from the collection that have albumId different than ([0-9]{1,6})$")
     fun removePhotosWithAlbumIdNotEqual(albumId: Int) {
-        val listOfAlbumId100 = apiContext.listOfPhotos.filterNot { it.albumId != albumId }
-        println(Gson().toJson(listOfAlbumId100))
-
+        val filteredPhotos = apiContext.listOfPhotos.filterNot { it.albumId != albumId }
+        logger().info(Gson().toJson(filteredPhotos))
+        AllureHelper.attachObject("Photos with album id equal to $albumId", filteredPhotos)
     }
 
     @Then("^user removes all photos that do not contain the word \"(.*)\" in the title$")
     fun removePhotosWithNameThatDoesntContain(title: String) {
-        val listOfErrorPhotos = apiContext.listOfPhotos.filterNot { !it.title.contains(title) }
-        println(Gson().toJson(listOfErrorPhotos))
+        val filteredPhotos = apiContext.listOfPhotos.filterNot { !it.title.contains(title) }
+        logger().info(Gson().toJson(filteredPhotos))
+        AllureHelper.attachObject("Photos that contain \"$title\" in title", filteredPhotos)
+
     }
 }
