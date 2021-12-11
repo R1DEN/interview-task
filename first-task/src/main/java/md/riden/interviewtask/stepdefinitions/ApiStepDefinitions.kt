@@ -1,4 +1,4 @@
-package md.riden.interviewtask.stepDefinitions
+package md.riden.interviewtask.stepdefinitions
 
 import com.google.gson.Gson
 import io.cucumber.java.en.Given
@@ -25,29 +25,26 @@ class ApiStepDefinitions(private val apiContext: ApiContext) {
     fun assertThereArePhotos(num: Int) {
         val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
         Assert.assertTrue("Photos API response contains 0 array elements", list.size > num)
-
+        apiContext.listOfPhotos = list
     }
 
     @Then("^user asserts response body has a photo with \"(.*)\" title$")
     fun checkIfResponseBodyHasPhotoWithTitle(title: String) {
-        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
         Assert.assertNotNull(
             "There is no photo with \"$title\" title",
-            list.firstOrNull { it.title == title })
+            apiContext.listOfPhotos.firstOrNull { it.title == title })
     }
 
     @Then("^user removes all photos from the collection that have albumId different than ([0-9]{1,6})$")
     fun removePhotosWithAlbumIdNotEqual(albumId: Int) {
-        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
-        val listOfAlbumId100 = list.filterNot { it.albumId != albumId }
+        val listOfAlbumId100 = apiContext.listOfPhotos.filterNot { it.albumId != albumId }
         println(Gson().toJson(listOfAlbumId100))
 
     }
 
     @Then("^user removes all photos that do not contain the word \"(.*)\" in the title$")
     fun removePhotosWithNameThatDoesntContain(title: String) {
-        val list = apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
-        val listOfErrorPhotos = list.filterNot { !it.title.contains(title) }
+        val listOfErrorPhotos = apiContext.listOfPhotos.filterNot { !it.title.contains(title) }
         println(Gson().toJson(listOfErrorPhotos))
     }
 }
