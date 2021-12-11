@@ -1,8 +1,6 @@
 package md.riden.interviewtask.cursmd.core
 
 import md.riden.interviewtask.cursmd.models.*
-import md.riden.task2.cursmd.models.*
-import md.riden.task2.interviewtask.cursmd.models.*
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements

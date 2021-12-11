@@ -27,6 +27,13 @@
         <artifactId>telegrambots</artifactId>
         <version>5.5.0</version>
     </dependency>
+    <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.module/jackson-module-kotlin -->
+    <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-kotlin</artifactId>
+        <version>2.11.3</version>
+    </dependency>
+
 </dependencies>
     <properties>
         <maven.compiler.source>13</maven.compiler.source>

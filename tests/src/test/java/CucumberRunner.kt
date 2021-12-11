@@ -6,6 +6,6 @@ import org.junit.runner.RunWith
 @CucumberOptions(
     features = ["classpath:features"],
     plugin = ["pretty", "json:target/cucumber.json", "io.qameta.allure.cucumber7jvm.AllureCucumber7Jvm"],
-    glue = ["md.riden.interviewtask.context", "md.riden.interviewtask.stepDefinitions"],
+    glue = ["md.riden.interviewtask.context", "md.riden.interviewtask.stepdefinitions"],
 )
-class TestTask1
+class CucumberRunner
