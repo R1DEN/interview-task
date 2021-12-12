@@ -8,6 +8,6 @@ class DigestContext {
     lateinit var newsHeadline: Screenshot
 
 
-    val holder = WebDriverHolder()
+    val holder: WebDriverHolder by lazy { WebDriverHolder() }
     val pomManager: PageObjectManager by lazy { PageObjectManager(holder.driver) }
 }
