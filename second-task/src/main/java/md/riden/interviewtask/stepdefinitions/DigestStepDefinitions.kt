@@ -20,7 +20,7 @@ import java.io.ByteArrayInputStream
 import java.time.LocalDate
 
 class DigestStepDefinitions(context: DigestContext) : AbstractSteps(context) {
-    private val pointMdHomePage: PointMdHomePage = context.pomManager.getPomOf()
+    private val pointMdHomePage: PointMdHomePage by lazy { context.pomManager.getPomOf() }
 
     @Given("^framework gets all latest currency rates$")
     fun frameworkGetsAllLatestCurrencyRates() {
@@ -39,8 +39,7 @@ class DigestStepDefinitions(context: DigestContext) : AbstractSteps(context) {
     @Then("^framework feeds digest to \"(.*)\" chat$")
     fun sendMessagesToChat(chatId: String) {
         val bot = Bot()
-        val telegramBotsApi = TelegramBotsApi(DefaultBotSession::class.java)
-        telegramBotsApi.registerBot(bot)
+        TelegramBotsApi(DefaultBotSession::class.java).registerBot(bot)
         context.rawCursMdResponse.getBankByName("Banca Nationala").toString().let {
             bot.execute(SendMessage(chatId, it))
         }

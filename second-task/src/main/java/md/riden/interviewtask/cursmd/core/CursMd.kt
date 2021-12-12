@@ -1,5 +1,6 @@
 package md.riden.interviewtask.cursmd.core
 
+import md.riden.interviewtask.common.logger
 import md.riden.interviewtask.cursmd.models.BankList
 import org.apache.http.NameValuePair
 import org.apache.http.client.entity.UrlEncodedFormEntity
@@ -15,6 +16,7 @@ class CursMd {
 
     @Throws(IOException::class)
     fun getBankListForDate(date: LocalDate): BankList {
+        logger().info("Getting data form curs.md AJAX request")
         //Using HttpClient because RestAssured doesn't work. Tried with Postman echo, and the requests were exactly the
         //same except "accept" header
         val httpClient = HttpClients.createDefault()
@@ -27,8 +29,20 @@ class CursMd {
             )
         )
         request.addHeader("Content-Type", "application/x-www-form-urlencoded")
-        val resp = String(httpClient.execute(request).entity.content.readAllBytes())
-        return CursXmlParser.parseHtml(resp)
+        val resp = try {
+            String(httpClient.execute(request).entity.content.readAllBytes())
+        } catch (e: Exception) {
+            logger().error("Could not get data from curs.md AJAX request")
+            throw RuntimeException(e)
+        }
+        logger().info("Parsing curs.md AJAX response")
+        val parsedData = try {
+            CursXmlParser.parseHtml(resp)
+        } catch (e: Exception) {
+            logger().error("Could not parse data from curs.md AJAX response")
+            throw RuntimeException(e)
+        }
+        return parsedData
     }
 
 }

@@ -1,5 +1,6 @@
 package md.riden.interviewtask.poms
 
+import md.riden.interviewtask.common.logger
 import md.riden.interviewtask.core.AbstractPom
 import org.openqa.selenium.JavascriptExecutor
 import org.openqa.selenium.WebDriver
@@ -11,10 +12,14 @@ class PointMdHomePage(webDriver: WebDriver) : AbstractPom(webDriver) {
     private lateinit var newsHeadline: WebElement
 
     fun scrollToNewsHeadline() {
+        logger().info("Scrolling to news headline")
         (webDriver as JavascriptExecutor).executeScript("arguments[0].scrollIntoView()", newsHeadline)
+        logger().info("Finished scrolling to news headline")
     }
 
     fun navigateTo() {
+        logger().info("Navigating to point.md")
         webDriver.navigate().to("https://point.md")
+        logger().info("Finished navigating to point.md")
     }
 }
