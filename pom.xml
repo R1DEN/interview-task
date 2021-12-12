@@ -20,6 +20,7 @@
         <maven.compiler.target>13</maven.compiler.target>
         <kotlin.version>1.5.0</kotlin.version>
         <aspectj.version>1.8.10</aspectj.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -80,6 +81,14 @@
             <artifactId>log4j-slf4j-impl</artifactId>
             <version>2.15.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect -->
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-reflect</artifactId>
+            <version>${kotlin.version}</version>
+            <scope>runtime</scope>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
