@@ -41,7 +41,7 @@ class WebDriverHolder {
                     Pair("SCREEN_HEIGHT", "1080")
                 )
             )
-            val f = File("./target/recodings")
+            val f = File("./target/recordings")
             f.mkdirs()
             withRecordingMode(BrowserWebDriverContainer.VncRecordingMode.RECORD_FAILING, f)
             start()

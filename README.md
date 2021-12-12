@@ -32,6 +32,7 @@ First task is implemented using RestAssured library.
 #### Second task:
 - In the first part the framework emulates an AJAX request on curs.md website to get detailed info on the local currency rates. Requests are made with Apache Http Client.  
 - The second parts opens a Chrome WebDriver in Docker using Testcontainers to open the homepage of the most popular local news site, scroll to the main articles and make an overview screenshot.
+In case a "test" fails - a video will be recorded and saved under tests/target/recordings folder which will help diagnose the issue.
 - The third part combines the currency rates from the National Bank and the News and sends them to a designated chat in Telegram using the Telegram Bot API.
 
 ## How to use:
