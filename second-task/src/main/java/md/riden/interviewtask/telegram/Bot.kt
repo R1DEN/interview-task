@@ -8,7 +8,5 @@ class Bot : TelegramLongPollingBot() {
     override fun getBotToken() = System.getProperty("bot_token")!!
     override fun getBotUsername() = "riden_digest_bot"
     override fun onUpdateReceived(update: Update) {
-        println(Gson().toJson(update))
     }
-
 }
