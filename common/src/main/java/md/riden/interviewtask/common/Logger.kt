@@ -1,6 +1,8 @@
 package md.riden.interviewtask.common
 
-import org.apache.logging.log4j.LogManager.getLogger
-import org.apache.logging.log4j.Logger
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
-fun <T : Any> T.logger(): Logger = getLogger(javaClass)
+
+fun <T : Any> T.logger(): Logger = LoggerFactory.getLogger(javaClass)
+fun <T : Any> T.logger(name: String): Logger = LoggerFactory.getLogger(name)
