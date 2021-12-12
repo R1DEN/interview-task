@@ -25,6 +25,7 @@ class DigestStepDefinitions(context: DigestContext) : AbstractSteps(context) {
     @Given("^framework gets all latest currency rates$")
     fun frameworkGetsAllLatestCurrencyRates() {
         context.rawCursMdResponse = CursMd().getBankListForDate(LocalDate.now())
+        AllureHelper.attachObject("Currency Rates", context.rawCursMdResponse)
     }
 
     @When("^framework gets local news headlines$")

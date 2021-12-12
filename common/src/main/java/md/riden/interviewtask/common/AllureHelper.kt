@@ -7,11 +7,11 @@ import java.io.ByteArrayInputStream
 
 object AllureHelper {
     fun attachObject(name: String, obj: Any) {
-        Allure.addAttachment(
-            name,
-            "application/json",
-            GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create().toJson(obj)
-        )
+        attachJson(name, GsonBuilder().disableHtmlEscaping().setPrettyPrinting().create().toJson(obj))
+    }
+
+    fun attachJson(name: String, json: String) {
+        Allure.addAttachment(name, "application/json", json)
     }
 
     fun attachScreenshot(name: String, image: BufferedImage) {

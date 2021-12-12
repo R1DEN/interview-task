@@ -17,7 +17,7 @@ class ApiStepDefinitions(private val apiContext: ApiContext) {
     fun getPhotos() {
         logger().info("Retrieving photos")
         apiContext.photosResponse = PhotosAPI.getPhotos()
-        logger().info(apiContext.photosResponse.body.asString())
+        AllureHelper.attachJson("Photos response", apiContext.photosResponse.body.asString())
         apiContext.listOfPhotos = try {
             logger().info("Parsing photos array")
             apiContext.photosResponse.then().extract().body().jsonPath().getList(".", Photo::class.java)
