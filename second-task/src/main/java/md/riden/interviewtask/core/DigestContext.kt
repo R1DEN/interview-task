@@ -1,11 +1,13 @@
 package md.riden.interviewtask.core
 
 import md.riden.interviewtask.cursmd.models.BankList
-import org.openqa.selenium.WebDriver
+import ru.yandex.qatools.ashot.Screenshot
 
 class DigestContext {
-    val messagesToSend = mutableListOf<String>()
     lateinit var rawCursMdResponse: BankList
+    lateinit var newsHeadline: Screenshot
+
+
     val holder = WebDriverHolder()
-    val driver: WebDriver by lazy { holder.driver }
+    val pomManager: PageObjectManager by lazy { PageObjectManager(holder.driver) }
 }

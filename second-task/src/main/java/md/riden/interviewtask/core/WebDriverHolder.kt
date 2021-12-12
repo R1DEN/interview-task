@@ -7,6 +7,7 @@ import org.openqa.selenium.chrome.ChromeOptions
 import org.openqa.selenium.logging.LogType
 import org.openqa.selenium.logging.LoggingPreferences
 import org.openqa.selenium.remote.CapabilityType
+import org.testcontainers.containers.BindMode
 import org.testcontainers.containers.BrowserWebDriverContainer
 import org.testcontainers.containers.output.Slf4jLogConsumer
 import java.io.File
@@ -23,7 +24,6 @@ class WebDriverHolder {
                 enable(LogType.BROWSER, Level.ALL)
                 enable(LogType.DRIVER, Level.ALL)
             }
-            options.addArguments("load-extension=/home/riden/Downloads/extension_4_40_0_0.crx")
             options.setCapability(CapabilityType.LOGGING_PREFS, logs)
             return options
         }
@@ -50,6 +50,7 @@ class WebDriverHolder {
     }
 
     fun close() {
+        browserContainer.webDriver.quit()
         browserContainer.stop()
     }
 }
