@@ -9,4 +9,4 @@ import org.junit.runner.RunWith
     glue = ["md.riden.interviewtask.context", "md.riden.interviewtask.stepdefinitions"],
     tags = "@Task2"
 )
-class CucumberRunner
+class CucumberRunnerTest

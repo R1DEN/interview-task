@@ -1,7 +1,7 @@
 @Task1
 Feature: Task1
 
-  Scenario: Task1
+  Scenario: User gets photos, asserts the response is valid and performs some actions based on the interview task
     Given user gets photos
     Then user asserts that response code is equal to 200
     Then user asserts that there are more than 0 photos
